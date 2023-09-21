@@ -1,0 +1,14 @@
+<div class="characteres-container">
+    <div class="characteres-container__item text-center" *ngFor="let character of favorites$ | async">
+      <h4>
+
+          <!-- {{ character.nameCharacter.length < 13 ? character.nameCharacter : (character.nameCharacter | slice: 0:13 ) + '...' }} -->
+        {{character.name}}
+      </h4>
+      <img [src]="character.image" />
+      
+      <a class="btn btn-danger" routerLink="/pages/favorites">
+        <i class="fa-solid fa-trash"></i>
+      </a>
+    </div>
+</div>
