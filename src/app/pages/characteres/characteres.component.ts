@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./characteres.component.scss']
 })
 export class CharacteresComponent {
-  public characteres$: Observable<IRickMortyApiCharacters[]> = new Observable();
+  public characteres$: Observable<any[]> = new Observable();
 
   constructor(
     private _characteresService:PagesService,
-    private router:Router
+    private _router:Router
   ){}
 
   ngOnInit(): void {
@@ -22,6 +22,19 @@ export class CharacteresComponent {
   }
 
   addFavorite(character:IRickMortyApiCharacters){
-    this.router.navigateByUrl('/pages/favorites')
-  }
+    const body = {
+      IdCharacter: character.id,
+      IdUser: localStorage.getItem('userId'),
+      nameCharacter: character.name,
+      caracterUrlImagen: character.image,
+      token: localStorage.getItem('token')
+    }
+
+    this._characteresService.addFavorite(body).subscribe(ok => {
+
+      if(ok !== false && typeof(ok) === 'boolean' ){
+        this._router.navigateByUrl('/pages/favorites');
+      }
+    })
+}
 }

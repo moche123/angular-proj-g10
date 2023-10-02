@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { CharacteresComponent } from './characteres/characteres.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { PagesGuard } from './guards/pages.guard';
 
 const routes: Routes = [
   {
@@ -11,12 +12,13 @@ const routes: Routes = [
     children: [
       {
         path: 'characteres',
-        component: CharacteresComponent
-
+        component: CharacteresComponent,
+        canActivate: [PagesGuard]
       },
       {
         path: 'favorites',
-        component: FavoritesComponent
+        component: FavoritesComponent,
+        canActivate: [PagesGuard]
       },
       {
         path: '',

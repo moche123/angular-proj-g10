@@ -13,7 +13,7 @@ export class FavoritesComponent {
   constructor( private _apiService: PagesService ){}
 
   ngOnInit(): void {
-    this.favorites$ = this._apiService.getFavorites()
+    this.favorites$ = this._apiService.getFavorites();
   }
 
 }

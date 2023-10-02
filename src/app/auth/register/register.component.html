@@ -53,5 +53,11 @@
        Ingresa desde aqui
     </a>
   </div>
+
+  <div class="mensaje-erroneo" *ngIf="message.length>0">
+    <p *ngFor="let mssg of message" class="margin-mesaje-parrafo">
+      {{mssg}}
+    </p>
+  </div>
  
 </div>

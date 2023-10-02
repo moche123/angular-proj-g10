@@ -3,9 +3,9 @@
       <h4>
 
           <!-- {{ character.nameCharacter.length < 13 ? character.nameCharacter : (character.nameCharacter | slice: 0:13 ) + '...' }} -->
-        {{character.name}}
+        {{character.nameCharacter}}
       </h4>
-      <img [src]="character.image" />
+      <img [src]="character.caracterUrlImagen" />
       
       <a class="btn btn-danger" routerLink="/pages/favorites">
         <i class="fa-solid fa-trash"></i>

@@ -7,14 +7,16 @@ import Swal from 'sweetalert2'
 
 @Injectable()
 export class PagesService {
-  baseUrl = environment.apiUrl;
+  apiUrl = environment.apiUrl;
+  private baseUrl: string = environment.baseUrl;
+
   constructor(
     private _httpClient: HttpClient
   ) { }
 
   getCharacteres(): Observable<IRickMortyApiCharacters[]> {
     return this._httpClient
-      .get<IRickMortyApi>(this.baseUrl)
+      .get<IRickMortyApi>(this.apiUrl)
       .pipe(
         map((res) => res.results), //! MAP, TAP, FILTER, REDUCE  => OPERATORS
        // tap(console.log),
@@ -30,21 +32,38 @@ export class PagesService {
   }
 
 
-  getFavorites(): Observable<IRickMortyApiCharacters[]> {
-    return this._httpClient
-      .get<IRickMortyApi>(this.baseUrl)
+
+  addFavorite(body: any): Observable<any> {
+    const url = `${this.baseUrl}/api/favorite/newFavorite`;
+
+
+
+    return this._httpClient.post<any>(url, body)
       .pipe(
-        map((res) => res.results),//*SE ESTA DANDO UNA SOLA EMISIÓN //! MAP, TAP, FILTER, REDUCE  => OPERATORS
-        //* take(5) => VA A TOMAR 5 EMISIONES 
-        map((res) => res.slice(0,5)),
-        catchError((_) => {
+        map(resp => resp.ok),
+        catchError(err => {
+          // alert(err.error.msg)
           Swal.fire(
-            'Oops!',
-            'Algo falló con la consulta',
+            'Oops',
+            err.error.msg,
             'error'
-          );
-          return of([]); //! of, from => CREAR UN OBSERVABLE
+          )
+          return of(err.error)
         })
-      );
+      )
+  }
+
+
+
+
+  getFavorites(): Observable<any[]> {
+    const url = `${this.baseUrl}/api/favorite/${localStorage.getItem('userId')}`;
+
+    return this._httpClient.get(url)
+      .pipe(
+        map((todo: any) => {
+          return todo.favoritos
+        })
+      )
   }
 }
