@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetinfoService {
-
-  constructor() { }
 
   info$: ReplaySubject<string> = new ReplaySubject(1);
 
@@ -14,7 +12,7 @@ export class GetinfoService {
     this.info$.next(userName);
   }
 
-  getValue(){
+  getValue(): Observable<string>{
     return this.info$.asObservable();
   }
 

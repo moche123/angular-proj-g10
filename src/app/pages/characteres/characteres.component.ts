@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Component, OnInit } from '@angular/core';
 import { IRickMortyApiCharacters } from '../models/pages.model';
 import { Observable } from 'rxjs';
 import { PagesService } from '../services/pages.service';
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './characteres.component.html',
   styleUrls: ['./characteres.component.scss']
 })
-export class CharacteresComponent {
+export class CharacteresComponent implements OnInit {
   public characteres$: Observable<any[]> = new Observable();
 
   constructor(
@@ -31,10 +32,9 @@ export class CharacteresComponent {
     }
 
     this._characteresService.addFavorite(body).subscribe(ok => {
-
       if(ok !== false && typeof(ok) === 'boolean' ){
         this._router.navigateByUrl('/pages/favorites');
       }
     })
-}
+  }
 }

@@ -36,7 +36,6 @@ export class RegisterComponent {
             'Usuario creado correctamente',
             'success'
           );
-
           this._router.navigateByUrl('/pages');
         } else {
 

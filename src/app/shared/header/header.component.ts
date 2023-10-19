@@ -10,7 +10,7 @@ import { GetinfoService } from '../services/getinfo.service';
 export class HeaderComponent implements OnInit {
 
   constructor( private router:Router, private _getInfoService: GetinfoService ){}
-  userName:string = '';
+  userName = '';
 
   ngOnInit(){
     if(!localStorage.getItem('name')){

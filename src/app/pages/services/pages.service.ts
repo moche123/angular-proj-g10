@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IRickMortyApi, IRickMortyApiCharacters } from '../models/pages.model';
-import { Observable, catchError, map, of, take } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2'
 
@@ -14,19 +14,24 @@ export class PagesService {
     private _httpClient: HttpClient
   ) { }
 
-  getCharacteres(): Observable<IRickMortyApiCharacters[]> {
+  getCharacteres(): Observable<IRickMortyApiCharacters[] | any> {
     return this._httpClient
       .get<IRickMortyApi>(this.apiUrl)
       .pipe(
-        map((res) => res.results), //! MAP, TAP, FILTER, REDUCE  => OPERATORS
+        map((res) => { 
+          if(res.results.length === 0){
+            throw new Error("Empty result")
+          }
+          return res.results 
+        }), //! MAP, TAP, FILTER, REDUCE  => OPERATORS
        // tap(console.log),
-        catchError((_) => {
+        catchError(() => {
           Swal.fire(
             'Oops!',
             'Algo falló con la consulta',
             'error'
           );
-          return of([]); //! of, from => CREAR UN OBSERVABLE
+          return of(0); //! of, from => CREAR UN OBSERVABLE
         })
       );
   }
